@@ -82,7 +82,6 @@ class MDC:
 
         data = self._s.recv(BUFFER_SIZE)
 
-        print(data)
         if chr(data[4]) == 'A':
             if data[6]:
                 return "Powered on"
@@ -97,7 +96,7 @@ class MDC:
         )
 
         self._s.send(bytes(msg))
-        data = self._s.recv(BUFFER_SIZE)
+        self._s.recv(BUFFER_SIZE)
 
     def power_off(self):
 
@@ -107,4 +106,4 @@ class MDC:
         )
 
         self._s.send(bytes(msg))
-        data = self._s.recv(BUFFER_SIZE)
+        self._s.recv(BUFFER_SIZE)
