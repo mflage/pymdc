@@ -36,6 +36,7 @@ class MDC:
 
     def _connect(self):
         if not self.connected:
+            self._s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self._s.connect((self._host, self._port))
             self.connected = True
 
