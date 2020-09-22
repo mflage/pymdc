@@ -24,6 +24,8 @@ class MDC:
         self._port = int(port)
         self._id = unit_id
 
+        self.connected = False
+
         self._s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def _calculate_checksum(self, data):
@@ -33,7 +35,13 @@ class MDC:
         pass
 
     def _connect(self):
-        self._s.connect((self._host, self._port))
+        if not self.connected:
+            self._s.connect((self._host, self._port))
+            self.connected = False
+
+    def _disconnect(self):
+        if self.connected:
+            self._s.close()
 
     def _assemble_cmd(self, cmd, data=None):
         """ takes in the main command and arguments and
@@ -72,7 +80,7 @@ class MDC:
         self._s.send(bytes(msg))
         data = self._s.recv(BUFFER_SIZE)
 
-        self._s.close()
+        self._disconnect()
 
         return(data)
 
@@ -94,7 +102,7 @@ class MDC:
             else:
                 return "Powered off"
 
-        self._s.close()
+        self._disconnect()
 
     def power_on(self):
 
@@ -107,7 +115,8 @@ class MDC:
 
         self._s.send(bytes(msg))
         self._s.recv(BUFFER_SIZE)
-        self._s.close()
+        
+        self._disconnect()
 
     def power_off(self):
 
@@ -120,4 +129,5 @@ class MDC:
 
         self._s.send(bytes(msg))
         self._s.recv(BUFFER_SIZE)
-        self._s.close()
+
+        self._disconnect()
