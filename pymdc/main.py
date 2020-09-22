@@ -37,10 +37,11 @@ class MDC:
     def _connect(self):
         if not self.connected:
             self._s.connect((self._host, self._port))
-            self.connected = False
+            self.connected = True
 
     def _disconnect(self):
         if self.connected:
+            self.connected = False
             self._s.close()
 
     def _assemble_cmd(self, cmd, data=None):
@@ -115,7 +116,7 @@ class MDC:
 
         self._s.send(bytes(msg))
         self._s.recv(BUFFER_SIZE)
-        
+
         self._disconnect()
 
     def power_off(self):
