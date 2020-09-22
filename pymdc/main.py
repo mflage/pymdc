@@ -25,7 +25,6 @@ class MDC:
         self._id = unit_id
 
         self._s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #self._connect()
 
     def _calculate_checksum(self, data):
         return sum(data) % 256
