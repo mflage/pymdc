@@ -31,7 +31,7 @@ class MDC:
     def _calculate_checksum(self, data):
         return sum(data) % 256
 
-    def _parse_response(data):
+    def _parse_response(self, data):
         pass
 
     def _connect(self):
@@ -41,9 +41,8 @@ class MDC:
             self.connected = True
 
     def _disconnect(self):
-        if self.connected:
-            self.connected = False
-            self._s.close()
+        self.connected = False
+        self._s.close()
 
     def _assemble_cmd(self, cmd, data=None):
         """ takes in the main command and arguments and
@@ -98,13 +97,13 @@ class MDC:
 
         data = self._s.recv(BUFFER_SIZE)
 
+        self._disconnect()
+
         if chr(data[4]) == 'A':
             if data[6]:
-                return "Powered on"
+                return True
             else:
-                return "Powered off"
-
-        self._disconnect()
+                return False
 
     def power_on(self):
 
