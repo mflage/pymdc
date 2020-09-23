@@ -8,7 +8,7 @@ setup(
   author = 'Marius Flage',
   author_email = 'marius@flage.org',
   url = 'https://github.com/mflage/pymdc',
-  download_url = 'https://github.com/mflage/pymdc/archive/v_01-alpha.tar.gz',
+  download_url = 'https://github.com/mflage/pymdc/archive/v0.1-alpha.tar.gz',
   keywords = ['mdc', "samsung remote control"],
   install_requires=[
   ],
