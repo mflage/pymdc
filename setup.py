@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'pymdc',
   packages = ['pymdc'],
-  version = '0.1',
+  version = '0.1-alpha',
   license='MIT',
   description = 'Python library to use the Multi Display Control protocol',
   author = 'Marius Flage',
