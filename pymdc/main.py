@@ -10,6 +10,9 @@ from .const import (
     POWER_ON,
     POWER_OFF,
     POWER_STATUS,
+    SENSOR_HEATEX,
+    SENSOR_LED_PLATE,
+    GET_MODEL,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -132,3 +135,60 @@ class MDC:
         self._s.recv(BUFFER_SIZE)
 
         self._disconnect()
+
+    def get_model(self):
+        self._connect()
+
+        msg = self._assemble_cmd(
+            GET_MODEL[0]
+        )
+
+        self._s.send(bytes(msg))
+        data = self._s.recv(BUFFER_SIZE)
+
+        if chr(data[4]) == 'A':
+            print(chr(data[4]))
+
+        print(hex(data[5]))
+        print(hex(data[6]))
+        print(hex(data[7]))
+        print(hex(data[8]))
+        print(hex(data[9]))
+
+        self._disconnect()
+
+    def get_serial(self):
+        pass
+
+    def get_temperature(self):
+
+        self._connect()
+
+        msg = self._assemble_cmd(
+            SENSOR_LED_PLATE[0],
+            SENSOR_LED_PLATE[1]
+        )
+
+        print(hex(msg[0]))
+        print(hex(msg[1]))
+        print(hex(msg[2]))
+        print(hex(msg[3]))
+        print(hex(msg[4]))
+        print(hex(msg[5]))
+        print("Sending")
+        print()
+
+        self._s.send(bytes(msg))
+
+        data = self._s.recv(BUFFER_SIZE)
+
+        self._disconnect()
+
+        print(hex(data[0]))
+        print(hex(data[1]))
+        print(hex(data[2]))
+        print(hex(data[3]))
+        print(chr(data[4]))
+        print(hex(data[5]))
+        print(hex(data[6]))
+        print(hex(data[7]))
